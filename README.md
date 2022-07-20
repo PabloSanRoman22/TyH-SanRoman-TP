@@ -6,4 +6,4 @@ Procedimiento de commit (actualizar repositorio local) y push (subir cambios a r
 2) git status
 3) git add .
 4) git commit -m "Explicación del commit"
-5) get push -u origin main
+5) git push -u origin main
