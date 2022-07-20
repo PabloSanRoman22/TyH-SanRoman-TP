@@ -1,7 +1,7 @@
 const Suscripcion = require("./suscripcion")
 const SuscripcionPorVenta = require("./suscripcionPorVenta")
 const SuscripcionPorPorcentaje = require("./suscripcionPorPorcentaje")
-//const Pedido = require("./pedido")
+const Pedido = require("./pedido")
 const Producto = require("./producto")
 const Variante = require("./variante")
 
@@ -63,7 +63,7 @@ unaSuscripcionPorVenta.setCantidadVentasPermitidas(20)
 unaSuscripcionPorVenta.setCostoPorVentaExtra(100)
 
 // creo la tienda
-//let unaTienda = new Tienda('Todo Indumentaria', unaSuscripcionPorVenta)
+let unaTienda = new Tienda('Todo Indumentaria', unaSuscripcionPorVenta)
 
 // producto
 let varianteTest1 = new Variante('15476','XL','negro','cuero')
@@ -75,7 +75,7 @@ unProducto.agregarVariante(varianteTest1)
 unProducto.agregarVariante(varianteTest2)
 
 // agrego producto con variantes al catalogo de tienda
-/*unaTienda.agregarProductoEnCatalogo(unProducto)
-console.log("Catalogo: ", unaTienda.getCatalogo())*/
+unaTienda.agregarProductoEnCatalogo(unProducto)
+console.log("Catalogo: ", unaTienda.getCatalogo())
 
 

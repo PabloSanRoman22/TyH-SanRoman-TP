@@ -6,7 +6,6 @@ const Producto = require("./producto")
 const Variante = require("./variante")
 const LineaDeVenta = require("./LineaDeVenta")
 const Pago = require("./pago")
-const Tienda = require("./tienda")
 //eliminar import de suscripciones despues de modularizar los test
 const Suscripcion = require("./Suscripcion")
 const SuscripcionPorPorcentaje = require("./SuscripcionPorPorcentaje")
@@ -14,8 +13,7 @@ const SuscripcionPorVenta = require("./SuscripcionPorVenta")
 
 
 class Pedido{
-    constructor(tienda, cliente, lineaDeVenta, envio, pago){
-        this.tienda = tienda
+    constructor(cliente, lineaDeVenta, envio, pago){
         this.cliente = cliente
         this.lineaDeVenta = lineaDeVenta
         this.envio = envio
@@ -98,9 +96,6 @@ module.exports = Pedido
 
 // Inicio Pruebas
 
-
-let unaSuscripcionPorVenta = new SuscripcionPorVenta()
-let unaTienda = new Tienda("Todo Ropa", unaSuscripcionPorVenta)
 let unCliente = new Cliente("LuisFernandez1984", "Luis", "Fernandez")
 let varianteTest1 = new Variante('15476','XL','negro','cuero')
 varianteTest1.agregarCantidad(5)
@@ -109,7 +104,7 @@ producto.agregarVariante(varianteTest1)
 let lineaDeVenta1 = new LineaDeVenta(producto)
 let unPago = new Pago(new Date())
 let unEnvio = new Envio("Ayacucho 136, CABA", unPago.getFechaPago());
-let unPedido = new Pedido(unaTienda, unCliente, lineaDeVenta1, unEnvio, unPago)
+let unPedido = new Pedido(unCliente, lineaDeVenta1, unEnvio, unPago)
 
 //agrego otra linea de venta
 let varianteTest2 = new Variante('15451','L','azul','jean')
