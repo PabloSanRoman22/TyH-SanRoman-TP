@@ -20,13 +20,11 @@ class Pedido{
         this.lineaDeVenta = lineaDeVenta
         this.envio = envio
         this.pago = pago
-        this.estado = 'iniciado'
+        this.estado = "iniciado"
         this.lineasDeVenta = []
-        //this.lineasDeVenta.push(lineaDeVenta) 
         this.agregarLineaDeVenta(this.lineaDeVenta)
         this.precioTotal = 0
         this.detalle = ''
-        this.estado = ''
     }
     agregarLineaDeVenta(unaLineaDeVenta){
         if (this.existeLineaDeVenta(unaLineaDeVenta)) {
@@ -59,8 +57,15 @@ class Pedido{
         })
         return this.precioTotal
     }
-    recibido(unEnvio){
-        return unEnvio.recibido()
+    getPago(){
+        return this.pago
+    }
+    aprobarPago(){
+        this.pago.aprobarPago()
+        this.pagar()
+    }
+    recibido(){
+        return (unEnvio.recibido() && this.estado == "recibido")
     }
     getDetalle(){
         this.lineasDeVenta.forEach(lineaDeVenta => {
@@ -68,18 +73,21 @@ class Pedido{
         })
         return this.detalle
     }
+    getEstado(){
+        return this.estado
+    }
     pagar(){
-        if (this.pago.estaAprobado() && this.estado == "iniciado") {
+        if (this.pago.estaAprobado() && this.estado == "iniciado" && !this.recibido()){
             this.estado = "pagado"  
         }
     }    
     enviar(){
-        if (this.estado == "pagado" && !(this.envio.recibido())) {
+        if (this.estado == "pagado" && !(this.recibido())) {
             this.estado = "enviado"
         }
     }
     recibir(){
-        if (this.estado == "enviado" && this.envio.recibido()) {
+        if (this.estado == "enviado" && !this.recibido()) {
             this.estado = "recibido"
         }
     }
@@ -113,3 +121,16 @@ unPedido.agregarLineaDeVenta(lineaDeVenta2)
 
 console.log("Se espera un Precio Total de Pedido de $140000: ", unPedido.getPrecioTotal())
 console.log(unPedido.getDetalle())
+
+// test de estados de pedido
+// test estado: iniciado
+console.log("Se inicia un pedido - ", "El pago esta aprobado: ", unPago.estaAprobado(), "Estado del pedido: ", unPedido.getEstado(), "El pedido esta recibido: ", unPedido.recibido())
+// test estado: pagado
+unPedido.aprobarPago()
+console.log("Se aprueba el pago - ", "El pago esta aprobado: ", unPago.estaAprobado(), "Estado del pedido: ", unPedido.getEstado(), "El pedido esta recibido: ", unPedido.recibido())
+// test estado: enviado
+unPedido.enviar()
+console.log("Se envia el pedido - ", "El pago esta aprobado: ", unPago.estaAprobado(), "Estado del pedido: ", unPedido.getEstado(), "El pedido esta recibido: ", unPedido.recibido())
+// test recibido
+unPedido.recibir()
+console.log("Se recibió el pedido - ", "El pago esta aprobado: ", unPago.estaAprobado(), "Estado del pedido: ", unPedido.getEstado(), "El pedido esta recibido: ", unPedido.recibido())
