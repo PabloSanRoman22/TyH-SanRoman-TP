@@ -13,7 +13,8 @@ const SuscripcionPorVenta = require("./SuscripcionPorVenta")
 
 
 class Pedido{
-    constructor(cliente, lineaDeVenta, envio, pago){
+    constructor(codigo, cliente, lineaDeVenta, envio, pago){
+        this.codigo = codigo
         this.cliente = cliente
         this.lineaDeVenta = lineaDeVenta
         this.envio = envio
@@ -23,6 +24,9 @@ class Pedido{
         this.agregarLineaDeVenta(this.lineaDeVenta)
         this.precioTotal = 0
         this.detalle = ''
+    }
+    getCodigo(){
+        return this.codigo
     }
     agregarLineaDeVenta(unaLineaDeVenta){
         if (this.existeLineaDeVenta(unaLineaDeVenta)) {
@@ -89,6 +93,12 @@ class Pedido{
             this.estado = "recibido"
         }
     }
+    getLineasDeVenta(){
+        return this.lineasDeVenta
+    }
+    getCliente(){
+        return this.cliente
+    }
     
 }
 
@@ -104,7 +114,7 @@ producto.agregarVariante(varianteTest1)
 let lineaDeVenta1 = new LineaDeVenta(producto)
 let unPago = new Pago(new Date())
 let unEnvio = new Envio("Ayacucho 136, CABA", unPago.getFechaPago());
-let unPedido = new Pedido(unCliente, lineaDeVenta1, unEnvio, unPago)
+let unPedido = new Pedido("17852", unCliente, lineaDeVenta1, unEnvio, unPago)
 
 //agrego otra linea de venta
 let varianteTest2 = new Variante('15451','L','azul','jean')

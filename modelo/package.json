@@ -1,0 +1,19 @@
+{
+  "name": "tyh-sanroman-tp",
+  "version": "1.0.0",
+  "description": "TP Entrega 1 de TyH - UNLP",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PabloSanRoman22/TyH-SanRoman-TP.git"
+  },
+  "author": "Pablo San Roman",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PabloSanRoman22/TyH-SanRoman-TP/issues"
+  },
+  "homepage": "https://github.com/PabloSanRoman22/TyH-SanRoman-TP#readme"
+}

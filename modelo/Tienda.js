@@ -13,7 +13,9 @@ class Tienda{
         this.ventasRealizadas = []
         this.catalogo = []
     }
-
+    getNombre(){
+        return this.nombre
+    }
     agregarProductoEnCatalogo(unProducto){
         if (this.existeProductoEnCatalogo(unProducto)) {
             throw Error ("El Producto que desea agregar ya existe")
@@ -40,7 +42,7 @@ class Tienda{
     }
     getStockProducto(unProducto){
         if (this.existeProductoEnCatalogo(unProducto)) {
-            return unProducto.getStockProducto()
+            return unProducto.getStockTotal()
         } else {
             throw Error ("El Producto que desea consultar stock no existe en el catalogo de la Tienda")
         }
@@ -48,7 +50,51 @@ class Tienda{
     getCatalogo(){
         return this.catalogo
     }
+    getSuscripcion(){
+        return this.suscripcion
+    }
+    cambiarSuscripcion(otraSuscripcion){
+        this.suscripcion = otraSuscripcion
+    }
+
+    existePedidoActivo(unPedido){
+        // funcion some busca en un array si existe algun elemento con la condicion deseada y devuelve boolean
+        const yaExiste = this.pedidosActivos.some(pedido => {
+            return pedido.getCodigo()===unPedido.getCodigo()
+        })
+        return yaExiste
+    }
     
+    agregarPedidoActivo(unPedido){
+        if (this.existePedidoActivo(unPedido)) {
+            throw Error ("El pedido que desea agregar ya existe")
+        } else {
+            // funcion push agrega un elemento al final del array
+            this.pedidosActivos.push(unPedido) 
+        }
+    }
+
+    prepararPedido(unPedido){
+        if (!this.existePedidoActivo(unPedido)) {
+            this.agregarPedidoActivo(unPedido)
+            // falta descontar stock
+        } else {
+            throw Error ("El pedido que desea preparar ya se encuentra en proceso")
+        }
+    }
+
+    costoSuscripcionMes(mes){
+        //falta restriccion de fecha
+    
+        //sumar precio de todas las lineas de venta
+        this.getVentasRealizadas().forEach(venta => {
+            this.precioTotal = this.precioTotal + venta.subTotal()
+        })
+        return this.precioTotal
+    }
+    getVentasRealizadas(){
+        return this.pedidosActivos
+    }
    
 }
 
@@ -73,9 +119,11 @@ varianteTest2.agregarCantidad(3)
 let unProducto = new Producto('1234','campera', 25000)
 unProducto.agregarVariante(varianteTest1)
 unProducto.agregarVariante(varianteTest2)
-
-// agrego producto con variantes al catalogo de tienda
 unaTienda.agregarProductoEnCatalogo(unProducto)
-console.log("Catalogo: ", unaTienda.getCatalogo())
 
+console.log("Producto existe en catalogo: ", unaTienda.existeProductoEnCatalogo(unProducto))
+console.log("Stock de producto deberia ser 8: ", unaTienda.getStockProducto(unProducto))
 
+// elimino unProducto del catalogo
+unaTienda.eliminarProductoEnCatalogo(unProducto)
+console.log("Producto eliminado correctamente del catalogo: ", !unaTienda.existeProductoEnCatalogo(unProducto),"Catalogo: ", unaTienda.getCatalogo())
